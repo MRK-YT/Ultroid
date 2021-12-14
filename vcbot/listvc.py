@@ -15,7 +15,7 @@ from . import *
 )
 async def list_handler(_, message):
     OUT = ""
-    if len(list(CallsClient.active_calls.keys())) == 0:
+    if not list(CallsClient.active_calls.keys()):
         return await eor(message, "No Active Group Calls Running..")
     OUT += "**• List of All Active Calls •**\n\n"
     for ke in CallsClient.active_calls.keys():

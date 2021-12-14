@@ -37,8 +37,7 @@ async def searchunsl(ult):
     qas = res[:num]
     dir = "resources/downloads"
     CL = []
-    nl = 0
-    for rp in qas:
+    for nl, rp in enumerate(qas):
         li = "https://unsplash.com" + rp["href"]
         ct = r.get(li).content
         bst = bs(ct, "html.parser", from_encoding="utf-8")
@@ -46,7 +45,6 @@ async def searchunsl(ult):
         Hp = dir + "img" + f"{nl}.png"
         urllib.request.urlretrieve(ft, Hp)
         CL.append(Hp)
-        nl += 1
     await ult.client.send_file(
         ult.chat_id, CL, caption=f"Uploaded {len(qas)} Images\n", album=True
     )

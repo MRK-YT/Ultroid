@@ -87,7 +87,7 @@ async def logo_gen(event):
     draw.text(
         (x, y), name, font=font, fill="white", stroke_width=strke, stroke_fill="black"
     )
-    flnme = f"ultd.png"
+    flnme = 'ultd.png'
     img.save(flnme, "png")
     await xx.edit("`Done!`")
     if os.path.exists(flnme):
@@ -101,6 +101,5 @@ async def logo_gen(event):
         await xx.delete()
     if os.path.exists(bg_):
         os.remove(bg_)
-    if os.path.exists(font_):
-        if not font_.startswith("resources/fonts"):
-            os.remove(font_)
+    if os.path.exists(font_) and not font_.startswith("resources/fonts"):
+        os.remove(font_)

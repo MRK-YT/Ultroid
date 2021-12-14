@@ -36,7 +36,7 @@ async def af(e):
     chat = e.chat_id
     if not (wt and wrd):
         return await eor(e, "`Use this command word to set as filter and reply...`")
-    if wt and wt.media:
+    if wt.media:
         wut = mediainfo(wt.media)
         if wut.startswith(("pic", "gif")):
             dl = await wt.download_media()
@@ -45,11 +45,10 @@ async def af(e):
         elif wut == "video":
             if wt.media.document.size > 8 * 1000 * 1000:
                 return await eod(x, "`Unsupported Media`")
-            else:
-                dl = await wt.download_media()
-                variable = uf(dl)
-                os.remove(dl)
-                m = "https://telegra.ph" + variable[0]
+            dl = await wt.download_media()
+            variable = uf(dl)
+            os.remove(dl)
+            m = "https://telegra.ph" + variable[0]
         else:
             m = pack_bot_file_id(wt.media)
         if wt.text:

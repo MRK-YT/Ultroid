@@ -78,7 +78,7 @@ async def _(event):
         o = "\n".join(_o)
         OUT += f"**• OUTPUT:**\n`{o}`"
     if not stderr and not stdout:
-        OUT += f"**• OUTPUT:**\n`Success`"
+        OUT += '**• OUTPUT:**\n`Success`'
     if len(OUT) > 4096:
         ultd = OUT.replace("`", "").replace("*", "").replace("_", "")
         with io.BytesIO(str.encode(ultd)) as out_file:
@@ -89,9 +89,10 @@ async def _(event):
                 force_document=True,
                 thumb="resources/extras/ultroid.jpg",
                 allow_cache=False,
-                caption=f"`{cmd}`" if (len(cmd) + 2) < 1000 else None,
+                caption=f"`{cmd}`" if len(cmd) < 998 else None,
                 reply_to=reply_to_id,
             )
+
             await xx.delete()
     else:
         await xx.edit(OUT)
@@ -104,9 +105,8 @@ p, pp = print, pprint  # ignore: pylint
     pattern="eval",
 )
 async def _(event):
-    if len(event.text) > 5:
-        if not event.text[5] == " ":
-            return
+    if len(event.text) > 5 and event.text[5] != " ":
+        return
     if not event.out and not is_fullsudo(event.sender_id):
         return await eor(event, "`This Command Is Sudo Restricted.`")
     if Redis("I_DEV") != "True":
@@ -171,11 +171,15 @@ async def _(event):
 
 async def aexec(code, event):
     exec(
-        f"async def __aexec(e, client): "
-        + "\n message = event = e"
-        + "\n reply = await event.get_reply_message()"
-        + "\n chat = (await event.get_chat()).id"
-        + "".join(f"\n {l}" for l in code.split("\n")),
+        (
+            (
+                ('async def __aexec(e, client): ' + "\n message = event = e")
+                + "\n reply = await event.get_reply_message()"
+            )
+            + "\n chat = (await event.get_chat()).id"
+        )
+        + "".join(f"\n {l}" for l in code.split("\n"))
     )
+
 
     return await locals()["__aexec"](event, event.client)

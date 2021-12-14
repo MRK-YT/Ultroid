@@ -38,10 +38,8 @@ async def mean(event):
     except BaseException:
         return await xx.edit("Oops! No such word found!!")
     x = get_string("wrd_1").format(wrd)
-    c = 1
-    for i in p:
+    for c, i in enumerate(p, start=1):
         x += f"**{c}.** `{i}`\n"
-        c += 1
     if len(x) > 4096:
         with io.BytesIO(str.encode(x)) as fle:
             fle.name = f"{wrd}-meanings.txt"
@@ -84,7 +82,7 @@ async def mean(event):
         else:
             await xx.edit(x)
     except Exception as e:
-        await xx.edit(f"No synonym found!!\n{str(e)}")
+        await xx.edit(f'No synonym found!!\n{e}')
 
 
 @ultroid_cmd(
@@ -116,7 +114,7 @@ async def mean(event):
         else:
             await xx.edit(x)
     except Exception as e:
-        await xx.edit(f"No antonym found!!\n{str(e)}")
+        await xx.edit(f'No antonym found!!\n{e}')
 
 
 @ultroid_cmd(pattern="ud (.*)")

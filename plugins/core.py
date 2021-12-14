@@ -105,6 +105,6 @@ async def load(event):
     except Exception as e:
         await eod(
             event,
-            f"**Could not load** `{shortname}` **because of the following error.**\n`{str(e)}`",
+            f'**Could not load** `{shortname}` **because of the following error.**\n`{e}`',
             time=3,
         )
